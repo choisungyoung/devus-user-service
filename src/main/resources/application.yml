@@ -1,0 +1,34 @@
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+spring:
+  profiles:
+    active:
+      - L
+  jpa:
+    properties:
+      hibernate:
+        #default_batch_fetch_size: 1000
+        format_sql: true
+    show-sql: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: create
+      #ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: 
+    username: 
+    password: 
+    
+devus-user-service:
+  max-source-length: 1000000
+
+
