@@ -3,6 +3,7 @@ package com.devus.userservice.controller;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
 	private final UserService userService;
+
+    private final PasswordEncoder passwordEncoder;
 	
 	//@GetMapping("")
 	public ResponseEntity<?> findUserAll(@PageableDefault Pageable pageable) throws Exception {
@@ -50,6 +53,8 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			throw new ValidationException(bindingResult);
         }
+		
+		dto.setPwd(passwordEncoder.encode(dto.getPwd()));
 		
 		return ResponseEntity.ok(new ResUserFindDTO(userService.saveUser(dto.toModel())));
 	}

@@ -39,7 +39,7 @@ public class JwtDecodeFilter extends OncePerRequestFilter {
 				Algorithm algorithm = Algorithm.HMAC256("secret");
 				JWTVerifier verifier = JWT.require(algorithm).withIssuer("issuer").build();
 				DecodedJWT jwt = verifier.verify(accessToken);
-				String username = jwt.getSubject(); // 아이디(학번)
+				String username = jwt.getSubject(); 
 
 				User user = (User) userDetailsService.loadUserByUsername(username);
 				Authentication authenticationToken = new UsernamePasswordAuthenticationToken(user, null,

@@ -37,7 +37,6 @@ public class SecurityConfig {
 		JwtLoginFilter jwtLoginFilter = new JwtLoginFilter(authenticationManager);
 		jwtLoginFilter.setUsernameParameter("email");
 		jwtLoginFilter.setPasswordParameter("pwd");
-
 		return http.csrf().disable()
 					.formLogin().disable()
 					.httpBasic().disable()
