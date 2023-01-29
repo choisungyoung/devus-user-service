@@ -33,7 +33,7 @@ public class GlobalExceptionControllerAdvice {
 		
 		return new ResponseEntity<ErrorResponse>(
 				ErrorResponse.builder()
-					.code("E0303")
+					.code("E0005")
 					.title("찾을 수 없음")
 					.message(e.toString())
 					.details(Collections.<String>emptyList())
@@ -57,10 +57,42 @@ public class GlobalExceptionControllerAdvice {
 		
 		return new ResponseEntity<ErrorResponse>(
 				ErrorResponse.builder()
-					.code("E0302")
+					.code("E0004")
 					.title("입력값 검증 에러")
 					.message(message)
 					.details(details)
+					.build()
+				, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(AuthenticationException.class)
+	public ResponseEntity<ErrorResponse> handleAuthenticationException(HttpServletRequest request, AuthenticationException e) {
+		log.error(e.toString());
+
+		return new ResponseEntity<ErrorResponse>(
+				ErrorResponse.builder()
+					.code(e.getCode())
+					.title("인증에러 발생")
+					.message(e.getMessage())
+					.details(Arrays.stream(e.getStackTrace()).map(st -> {
+						return st.toString();
+					}).collect(Collectors.toList()))
+					.build()
+				, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(BusinessException.class)
+	public ResponseEntity<ErrorResponse> handleBusinessException(HttpServletRequest request, BusinessException e) {
+		log.error(e.toString());
+
+		return new ResponseEntity<ErrorResponse>(
+				ErrorResponse.builder()
+					.code(e.getCode())
+					.title("업무처리 중 발생")
+					.message(e.getMessage())
+					.details(Arrays.stream(e.getStackTrace()).map(st -> {
+						return st.toString();
+					}).collect(Collectors.toList()))
 					.build()
 				, HttpStatus.BAD_REQUEST);
 	}
@@ -71,7 +103,7 @@ public class GlobalExceptionControllerAdvice {
 
 		return new ResponseEntity<ErrorResponse>(
 				ErrorResponse.builder()
-					.code("E0301")
+					.code("E0001")
 					.title("에러 발생")
 					.message(e.toString())
 					.details(Arrays.stream(e.getStackTrace()).map(st -> {

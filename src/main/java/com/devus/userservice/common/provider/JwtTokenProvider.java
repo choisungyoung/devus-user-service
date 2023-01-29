@@ -42,7 +42,10 @@ public class JwtTokenProvider {
     private final Key accessTokenKey;
     private final Key refreshTokenKey;
 
-    public JwtTokenProvider(@Value("${jwt.secret.access-token}") String accessTokenSecret, @Value("${jwt.secret.refresh-token}") String refreshTokenSecret) {
+    public JwtTokenProvider(@Value("${devus.jwt.secret.access-token}") 
+						    String accessTokenSecret,
+						    @Value("${devus.jwt.secret.refresh-token}") 
+						    String refreshTokenSecret) {
 
     	this.accessTokenKey  = Keys.hmacShaKeyFor(Decoders.BASE64.decode(accessTokenSecret));
     	this.refreshTokenKey  = Keys.hmacShaKeyFor(Decoders.BASE64.decode(refreshTokenSecret));
